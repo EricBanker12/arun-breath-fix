@@ -21,7 +21,7 @@ module.exports = function arunBreathFix(dispatch) {
     })
 
     //S_ABNORMALITY_BEGIN
-    dispatch.hook('S_ABNORMALITY_BEGIN', 2, addTarget)
+    dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.base.majorPatchVersion >= 75 ? 3 : 2, addTarget)
 
     //S_ABNORMALITY_REFRESH
     dispatch.hook('S_ABNORMALITY_REFRESH', 1, addTarget)

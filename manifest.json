@@ -2,11 +2,11 @@
 	"files": {
 		"README.md": "2e27a6acd523c2bf9d7a15f503e3afd45c7bf4d6fa835498245b76489e5b70f8",
 		"README.url": "cb32d6fed8b48025e31c2d2a7830c458fd8a2a39d3f460adc2244aa5b954fa40",
-		"index.js": "eb58fd011b109e4dec527da3c05874e491550bce509dcb4bd4416614d3e55b31",
+		"index.js": "e64cb5505a56c742396f2b826c3c3dc4345e5e0194275c3ab0f0a7485702c36c",
 		"module.json": "45fb45f0fd162a293142c61d0d77decc35bacd1389c2ed2d2a65ce6277532a36"
 	},
 	"defs": {
-		"S_ABNORMALITY_BEGIN": 2,
+		"S_ABNORMALITY_BEGIN": [2,3],
 		"S_ABNORMALITY_END": 1,
 		"S_ABNORMALITY_REFRESH": 1,
 		"S_EACH_SKILL_RESULT": 12,
