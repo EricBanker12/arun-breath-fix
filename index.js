@@ -6,18 +6,18 @@ module.exports = function arunBreathFix(dispatch) {
     
     let gameId,
         job,
-        targets = []
+        targets = {}
 
     //S_LOGIN
     dispatch.hook('S_LOGIN', 10, (event) => {
         gameId = event.gameId
         job = (event.templateId - 10101) % 100
-        targets = []
+        targets = {}
     })
 
     //S_LOAD_TOPO
     dispatch.hook('S_LOAD_TOPO', 'raw', () => {
-        targets = []
+        targets = {}
     })
 
     //S_ABNORMALITY_BEGIN
@@ -30,12 +30,15 @@ module.exports = function arunBreathFix(dispatch) {
     function addTarget(event) {
         if (job == mystic) {
             if (event.id == arunBreath) {
-                if (!event.target.equals(gameId)) {
-                    let targetString = JSON.stringify(event.target)
-                    if (!targets.includes(targetString)) {
-                        targets.push(targetString)
-                        //console.log(targetString, 'added')
+                let target = event.target
+                if (target.sub(gameId) != 0) {
+                    if (typeof target == "bigint") {
+                        let high = target >> 32,
+                            low = target % high << 32
+                        target = {high: Number(high), low: Number(low)}
                     }
+                    if (!targets[target.high]) targets[target.high] = {}
+                    if (!targets[target.high][target.low]) targets[target.high][target.low] = true
                 }
             }
         }
@@ -48,26 +51,37 @@ module.exports = function arunBreathFix(dispatch) {
     function removeTarget(event) {
         if (job == mystic) {
             if (event.id == arunBreath) {
-                let targetString = JSON.stringify(event.target)
-                if (targets.includes(targetString)) {
-                    targets.splice(targets.indexOf(targetString), 1)
-                    //console.log(targetString, 'removed')
+                let target = event.target
+                if (typeof target == "bigint") {
+                    let high = target >> 32,
+                        low = target % high << 32
+                    target = {high: Number(high), low: Number(low)}
+                }
+                if (targets[target.high] && targets[target.high][target.low]) {
+                    delete targets[target.high][target.low]
+                    if (Object.keys(targets[target.high]).length == 0) {
+                        delete targets[target.high]
+                    }
                 }
             }
         }
     }
 
     //S_EACH_SKILL_RESULT
-    dispatch.hook('S_EACH_SKILL_RESULT', 6, (event) => {
+    dispatch.hook('S_EACH_SKILL_RESULT', 12, (event) => {
         if (job == mystic) {
-            if (event.source.equals(gameId) || event.owner.equals(gameId)) {
-                let skill = Math.floor((event.skill - 0x4000000) / 10000)
+            if (event.source.sub(gameId) = 0 || event.owner.sub(gameId) == 0) {
+                let skill = Math.floor(event.skill.id / 10000)
                 //console.log('skill', skill)
                 if (skill == titanicFavor || skill == boomerangPulse) {
-                    //console.log(targets)
-                    let targetString = JSON.stringify(event.target)
-                    if (targets.includes(targetString)) {
-                        setTimeout(sendHeal, 1, event)
+                    let target = event.target
+                    if (typeof target == "bigint") {
+                        let high = target >> 32,
+                            low = target % high << 32
+                        target = {high: Number(high), low: Number(low)}
+                    }
+                    if (targets[target.high] && targets[target.high][target.low]) {
+                        sendHeal(event)
                     }
                 }
             }
@@ -77,6 +91,6 @@ module.exports = function arunBreathFix(dispatch) {
     function sendHeal(event) {
         event.damage = 15000
         event.crit = 0
-        dispatch.toClient('S_EACH_SKILL_RESULT', 6, event)
+        dispatch.toClient('S_EACH_SKILL_RESULT', 12, event)
     }
 }
