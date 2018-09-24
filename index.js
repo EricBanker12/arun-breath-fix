@@ -32,11 +32,13 @@ module.exports = function arunBreathFix(dispatch) {
             if (event.id == arunBreath) {
                 let target = event.target
                 if (target.sub(gameId) != 0) {
+                    /*
                     if (typeof target == "bigint") {
                         let high = target >> 32,
                             low = target % (high << 32)
                         target = {high: Number(high), low: Number(low)}
                     }
+                    */
                     if (!targets[target.high]) targets[target.high] = {}
                     if (!targets[target.high][target.low]) targets[target.high][target.low] = true
                 }
@@ -52,11 +54,13 @@ module.exports = function arunBreathFix(dispatch) {
         if (job == mystic) {
             if (event.id == arunBreath) {
                 let target = event.target
+                /*
                 if (typeof target == "bigint") {
                     let high = target >> 32,
                         low = target % high << 32
                     target = {high: Number(high), low: Number(low)}
                 }
+                */
                 if (targets[target.high] && targets[target.high][target.low]) {
                     delete targets[target.high][target.low]
                     if (Object.keys(targets[target.high]).length == 0) {
@@ -75,11 +79,13 @@ module.exports = function arunBreathFix(dispatch) {
                 //console.log('skill', skill)
                 if (skill == titanicFavor || skill == boomerangPulse) {
                     let target = event.target
+                    /*
                     if (typeof target == "bigint") {
                         let high = target >> 32,
                             low = target % high << 32
                         target = {high: Number(high), low: Number(low)}
                     }
+                    */
                     if (targets[target.high] && targets[target.high][target.low]) {
                         sendHeal(event)
                     }
