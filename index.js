@@ -34,7 +34,7 @@ module.exports = function arunBreathFix(dispatch) {
                 if (target.sub(gameId) != 0) {
                     if (typeof target == "bigint") {
                         let high = target >> 32,
-                            low = target % high << 32
+                            low = target % (high << 32)
                         target = {high: Number(high), low: Number(low)}
                     }
                     if (!targets[target.high]) targets[target.high] = {}
