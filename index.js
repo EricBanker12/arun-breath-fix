@@ -31,7 +31,7 @@ module.exports = function arunBreathFix(dispatch) {
         if (job == mystic) {
             if (event.id == arunBreath) {
                 let target = event.target
-                if (target.sub(gameId) != 0) {
+                if (!target.equals(gameId)) {
                     /*
                     if (typeof target == "bigint") {
                         let high = target >> 32,
@@ -74,7 +74,7 @@ module.exports = function arunBreathFix(dispatch) {
     //S_EACH_SKILL_RESULT
     dispatch.hook('S_EACH_SKILL_RESULT', 12, (event) => {
         if (job == mystic) {
-            if (event.source.sub(gameId) = 0 || event.owner.sub(gameId) == 0) {
+            if (event.source.equals(gameId) || event.owner.equals(gameId)) {
                 let skill = Math.floor(event.skill.id / 10000)
                 //console.log('skill', skill)
                 if (skill == titanicFavor || skill == boomerangPulse) {
@@ -96,7 +96,7 @@ module.exports = function arunBreathFix(dispatch) {
 
     function sendHeal(event) {
         event.damage = 15000
-        event.crit = 0
+        event.crit = false
         dispatch.toClient('S_EACH_SKILL_RESULT', 12, event)
     }
 }
