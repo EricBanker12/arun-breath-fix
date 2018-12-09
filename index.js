@@ -6,22 +6,22 @@ module.exports = function arunBreathFix(dispatch) {
     
     let gameId,
         job,
-        targets = {}
+        targets
 
     //S_LOGIN
     dispatch.hook('S_LOGIN', 10, (event) => {
         gameId = event.gameId
         job = (event.templateId - 10101) % 100
-        targets = {}
+        targets = new Map()
     })
 
     //S_LOAD_TOPO
     dispatch.hook('S_LOAD_TOPO', 'raw', () => {
-        targets = {}
+        targets = new Map()
     })
 
     //S_ABNORMALITY_BEGIN
-    dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.base.majorPatchVersion >= 75 ? 3 : 2, addTarget)
+    dispatch.hook('S_ABNORMALITY_BEGIN', 3, addTarget)
 
     //S_ABNORMALITY_REFRESH
     dispatch.hook('S_ABNORMALITY_REFRESH', 1, addTarget)
@@ -30,17 +30,8 @@ module.exports = function arunBreathFix(dispatch) {
     function addTarget(event) {
         if (job == mystic) {
             if (event.id == arunBreath) {
-                let target = event.target
-                if (!target.equals(gameId)) {
-                    /*
-                    if (typeof target == "bigint") {
-                        let high = target >> 32,
-                            low = target % (high << 32)
-                        target = {high: Number(high), low: Number(low)}
-                    }
-                    */
-                    if (!targets[target.high]) targets[target.high] = {}
-                    if (!targets[target.high][target.low]) targets[target.high][target.low] = true
+                if (event.target != gameId) {
+                    targets.set(event.target, true)
                 }
             }
         }
@@ -53,20 +44,7 @@ module.exports = function arunBreathFix(dispatch) {
     function removeTarget(event) {
         if (job == mystic) {
             if (event.id == arunBreath) {
-                let target = event.target
-                /*
-                if (typeof target == "bigint") {
-                    let high = target >> 32,
-                        low = target % high << 32
-                    target = {high: Number(high), low: Number(low)}
-                }
-                */
-                if (targets[target.high] && targets[target.high][target.low]) {
-                    delete targets[target.high][target.low]
-                    if (Object.keys(targets[target.high]).length == 0) {
-                        delete targets[target.high]
-                    }
-                }
+                targets.delete(event.target)
             }
         }
     }
@@ -74,19 +52,11 @@ module.exports = function arunBreathFix(dispatch) {
     //S_EACH_SKILL_RESULT
     dispatch.hook('S_EACH_SKILL_RESULT', 12, (event) => {
         if (job == mystic) {
-            if (event.source.equals(gameId) || event.owner.equals(gameId)) {
+            if (event.source == gameId || event.owner == gameId) {
                 let skill = Math.floor(event.skill.id / 10000)
                 //console.log('skill', skill)
                 if (skill == titanicFavor || skill == boomerangPulse) {
-                    let target = event.target
-                    /*
-                    if (typeof target == "bigint") {
-                        let high = target >> 32,
-                            low = target % high << 32
-                        target = {high: Number(high), low: Number(low)}
-                    }
-                    */
-                    if (targets[target.high] && targets[target.high][target.low]) {
+                    if (targets.get(event.target)) {
                         sendHeal(event)
                     }
                 }
