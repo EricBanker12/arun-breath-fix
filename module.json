@@ -1,5 +1,8 @@
 {
-	"disableAutoUpdate": false,
-	"servers": ["https://raw.githubusercontent.com/Mister-Kay/arun-breath-fix/master/"],
-	"supportUrl": "https://github.com/Mister-Kay/arun-breath-fix/issues"
+    "disableAutoUpdate": false,
+    "servers": ["https://raw.githubusercontent.com/Mister-Kay/arun-breath-fix/master/"],
+    "supportUrl": "https://github.com/Mister-Kay/arun-breath-fix/issues",
+    "name": "arun-breath-fix",
+    "author": "Mister-Kay",
+    "description": "Show heal from Arun's Breath (Titanic Favor or Boomerang Pulse inside Warding Totem range) when playing mystic."
 }

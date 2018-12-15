@@ -9,7 +9,7 @@ module.exports = function arunBreathFix(dispatch) {
         targets
 
     //S_LOGIN
-    dispatch.hook('S_LOGIN', 10, (event) => {
+    dispatch.hook('S_LOGIN', 12, (event) => {
         gameId = event.gameId
         job = (event.templateId - 10101) % 100
         targets = new Map()
@@ -67,6 +67,6 @@ module.exports = function arunBreathFix(dispatch) {
     function sendHeal(event) {
         event.damage = 15000
         event.crit = false
-        dispatch.toClient('S_EACH_SKILL_RESULT', 12, event)
+        setTimeout(dispatch.toClient, 1, 'S_EACH_SKILL_RESULT', 12, event)
     }
 }
