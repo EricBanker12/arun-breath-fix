@@ -67,6 +67,6 @@ module.exports = function arunBreathFix(dispatch) {
     function sendHeal(event) {
         event.damage = 15000
         event.crit = false
-        setTimeout(dispatch.toClient, 1, 'S_EACH_SKILL_RESULT', 12, event)
+        dispatch.toClient('S_EACH_SKILL_RESULT', 12, event)
     }
 }
