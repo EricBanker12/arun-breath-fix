@@ -50,7 +50,7 @@ module.exports = function arunBreathFix(dispatch) {
     }
 
     //S_EACH_SKILL_RESULT
-    dispatch.hook('S_EACH_SKILL_RESULT', 12, (event) => {
+    dispatch.hook('S_EACH_SKILL_RESULT', 13, (event) => {
         if (job == mystic) {
             if (event.source == gameId || event.owner == gameId) {
                 let skill = Math.floor(event.skill.id / 10000)
@@ -67,6 +67,6 @@ module.exports = function arunBreathFix(dispatch) {
     function sendHeal(event) {
         event.damage = 15000
         event.crit = false
-        dispatch.toClient('S_EACH_SKILL_RESULT', 12, event)
+        dispatch.toClient('S_EACH_SKILL_RESULT', 13, event)
     }
 }

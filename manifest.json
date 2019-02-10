@@ -2,14 +2,14 @@
     "files": {
         "README.md": "2e27a6acd523c2bf9d7a15f503e3afd45c7bf4d6fa835498245b76489e5b70f8",
         "README.url": "cb32d6fed8b48025e31c2d2a7830c458fd8a2a39d3f460adc2244aa5b954fa40",
-        "index.js": "1e652c65fba87890ddd4ba843f212bea46d7c30ab429dedf69a62995513b93e1",
+        "index.js": "a40d8aa6a3cc30ba2ae494e7aa063706e3a649820975a70c24d3793d1700eb2c",
         "module.json": "26bdeecc1422182dd065539274161c9dfe758300ca4a02730eae1b4fd0c65d62"
     },
     "defs": {
         "S_ABNORMALITY_BEGIN": 3,
         "S_ABNORMALITY_END": 1,
         "S_ABNORMALITY_REFRESH": 1,
-        "S_EACH_SKILL_RESULT": 12,
+        "S_EACH_SKILL_RESULT": 13,
         "S_LOAD_TOPO": "raw",
         "S_LOGIN": 12
     }
