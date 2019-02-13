@@ -1,4 +1,7 @@
 module.exports = function arunBreathFix(dispatch) {
+    // disable on classic
+    if (dispatch.isClassic) return
+
     const mystic = 7
     const arunBreath = 702012
     const titanicFavor = 5
