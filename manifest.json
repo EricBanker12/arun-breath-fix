@@ -2,7 +2,7 @@
     "files": {
         "README.md": "2e27a6acd523c2bf9d7a15f503e3afd45c7bf4d6fa835498245b76489e5b70f8",
         "README.url": "cb32d6fed8b48025e31c2d2a7830c458fd8a2a39d3f460adc2244aa5b954fa40",
-        "index.js": "72f3675d7bf59db724d157fed19779c6a4c26e35bc6350b7509d6ab587e131fe",
+        "index.js": "ccfced1ab61b3029f304c5bcd235f91206a5f0f4b323fcc51bca24c497aa8bd2",
         "module.json": "26bdeecc1422182dd065539274161c9dfe758300ca4a02730eae1b4fd0c65d62"
     },
     "defs": {
@@ -11,6 +11,6 @@
         "S_ABNORMALITY_REFRESH": 1,
         "S_EACH_SKILL_RESULT": 13,
         "S_LOAD_TOPO": "raw",
-        "S_LOGIN": 12
+        "S_LOGIN": [12,13]
     }
 }

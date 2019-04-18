@@ -12,7 +12,7 @@ module.exports = function arunBreathFix(dispatch) {
         targets
 
     //S_LOGIN
-    dispatch.hook('S_LOGIN', 12, (event) => {
+    dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 81 ? 13 : 12, (event) => {
         gameId = event.gameId
         job = (event.templateId - 10101) % 100
         targets = new Map()
