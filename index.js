@@ -12,7 +12,7 @@ module.exports = function arunBreathFix(dispatch) {
         targets
 
     //S_LOGIN
-    dispatch.hook('S_LOGIN', 13, (event) => {
+    dispatch.hook('S_LOGIN', dispatch.majorPatchVersion < 86 ? 13 : 14, (event) => {
         gameId = event.gameId
         job = (event.templateId - 10101) % 100
         targets = new Map()
@@ -24,10 +24,10 @@ module.exports = function arunBreathFix(dispatch) {
     })
 
     //S_ABNORMALITY_BEGIN
-    dispatch.hook('S_ABNORMALITY_BEGIN', 3, addTarget)
+    dispatch.hook('S_ABNORMALITY_BEGIN', 4, addTarget)
 
     //S_ABNORMALITY_REFRESH
-    dispatch.hook('S_ABNORMALITY_REFRESH', 1, addTarget)
+    dispatch.hook('S_ABNORMALITY_REFRESH', 2, addTarget)
 
     // addTarget
     function addTarget(event) {
@@ -53,7 +53,7 @@ module.exports = function arunBreathFix(dispatch) {
     }
 
     //S_EACH_SKILL_RESULT
-    dispatch.hook('S_EACH_SKILL_RESULT', 13, (event) => {
+    dispatch.hook('S_EACH_SKILL_RESULT', dispatch.majorPatchVersion < 86 ? 13 : 14, (event) => {
         if (job == mystic) {
             if (event.source == gameId || event.owner == gameId) {
                 let skill = Math.floor(event.skill.id / 10000)
@@ -70,6 +70,6 @@ module.exports = function arunBreathFix(dispatch) {
     function sendHeal(event) {
         event.damage = 15000
         event.crit = false
-        dispatch.toClient('S_EACH_SKILL_RESULT', 13, event)
+        dispatch.toClient('S_EACH_SKILL_RESULT', dispatch.majorPatchVersion < 86 ? 13 : 14, event)
     }
 }
